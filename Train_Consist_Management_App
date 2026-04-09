@@ -1,5 +1,22 @@
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
+// Reusing Bogie class from UC7
+class Bogie {
+    String name;
+    int capacity;
+
+    Bogie(String name, int capacity) {
+        this.name = name;
+        this.capacity = capacity;
+    }
+
+    @Override
+    public String toString() {
+        return name + " -> Capacity: " + capacity;
+    }
+}
 
 public class TrainConsistApp {
 
@@ -7,23 +24,24 @@ public class TrainConsistApp {
 
         System.out.println("=== Train Consist Management App ===");
 
-        // Step 1: Create HashMap for bogie-capacity mapping
-        Map<String, Integer> bogieCapacity = new HashMap<>();
+        // Step 1: Create list of bogies
+        List<Bogie> bogies = new ArrayList<>();
+        bogies.add(new Bogie("Sleeper", 72));
+        bogies.add(new Bogie("AC Chair", 56));
+        bogies.add(new Bogie("First Class", 40));
 
-        // Step 2: Insert bogie capacities (key-value pairs)
-        bogieCapacity.put("Sleeper", 72);
-        bogieCapacity.put("AC Chair", 60);
-        bogieCapacity.put("First Class", 40);
+        // Step 2: Apply Stream filter (capacity > 60)
+        List<Bogie> filteredBogies = bogies.stream()
+                .filter(b -> b.capacity > 60)
+                .collect(Collectors.toList());
 
-        // Step 3: Display mapping using entrySet()
-        System.out.println("\nBogie Capacity Details:");
+        // Step 3: Display filtered bogies
+        System.out.println("\nFiltered Bogies (capacity > 60):");
 
-        for (Map.Entry<String, Integer> entry : bogieCapacity.entrySet()) {
-            System.out.println("Bogie: " + entry.getKey() +
-                               " -> Capacity: " + entry.getValue());
+        for (Bogie b : filteredBogies) {
+            System.out.println(b);
         }
 
         System.out.println("\nProgram continues...");
     }
-
 }
